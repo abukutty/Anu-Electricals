@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anu Electricals · Rasipuram</title>
+  <style>
+    /* ----- RESET & VARIABLES ----- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
+
+    :root {
+      --blue-dark: #0a4b7a;
+      --blue-primary: #1e6eb5;
+      --blue-light: #e6f0fa;
+      --white: #ffffff;
+      --gray-bg: #f9fbfd;
+      --gray-border: #e2e8f0;
+      --text-dark: #1e293b;
+      --text-soft: #334155;
+      --shadow-card: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
+      --shadow-hover: 0 20px 30px -10px rgba(0, 80, 150, 0.15);
+      --radius-card: 1.2rem;
+      --radius-sm: 0.75rem;
+      --transition: all 0.2s ease;
+    }
+
+    body {
+      background-color: var(--white);
+      color: var(--text-dark);
+      line-height: 1.5;
+      scroll-behavior: smooth;
+    }
+
+    /* ----- CONTAINER (same width all sections) ----- */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 3rem 2rem;
+      }
+    }
+
+    /* ----- TYPOGRAPHY & UTILS ----- */
+    h1, h2, h3 {
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      color: var(--blue-dark);
+      position: relative;
+    }
+    h2:after {
+      content: '';
+      display: block;
+      width: 70px;
+      height: 4px;
+      background: var(--blue-primary);
+      border-radius: 100px;
+      margin-top: 0.5rem;
+    }
+
+    /* ----- BUTTONS (demo: no actions, only pointer) ----- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: var(--white);
+      border: 1px solid var(--gray-border);
+      color: var(--text-dark);
+      padding: 0.75rem 1.6rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: var(--transition);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+      cursor: pointer;
+      pointer-events: auto;  /* just for demo, but we keep look */
+    }
+    .btn-primary {
+      background: var(--blue-primary);
+      border-color: var(--blue-primary);
+      color: white;
+      box-shadow: 0 8px 18px -6px var(--blue-primary);
+    }
+    .btn-primary:hover {
+      background: var(--blue-dark);
+      border-color: var(--blue-dark);
+      transform: scale(1.02);
+      box-shadow: 0 12px 24px -8px var(--blue-dark);
+    }
+    .btn-outline:hover {
+      background: var(--blue-light);
+      border-color: var(--blue-primary);
+      color: var(--blue-dark);
+      transform: translateY(-2px);
+    }
+
+    /* ----- HEADER (sticky + hamburger) ----- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    }
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.8rem 1.5rem;
+      max-width: 1280px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+    }
+    .shop-title {
+      display: flex;
+      flex-direction: column;
+    }
+    .shop-name {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--blue-dark);
+      line-height: 1.2;
+    }
+    .shop-sub {
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+    .rating-badge {
+      background: var(--blue-light);
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      font-weight: 600;
+      color: var(--blue-dark);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      border: 1px solid white;
+      box-shadow: var(--shadow-card);
+      font-size: 0.9rem;
+      margin-left: auto;
+      margin-right: 0.5rem;
+    }
+    .stars {
+      color: #f5b342;
+      letter-spacing: 2px;
+    }
+
+    /* HAMBURGER MENU */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 28px;
+      height: 22px;
+      cursor: pointer;
+      z-index: 100;
+    }
+    .hamburger span {
+      width: 100%;
+      height: 3.5px;
+      background: var(--blue-dark);
+      border-radius: 10px;
+      transition: var(--transition);
+    }
+    /* nav links mobile */
+    .nav-links {
+      position: fixed;
+      top: 0;
+      right: -100%;
+      width: 250px;
+      height: 100vh;
+      background: white;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      padding: 6rem 2rem 2rem;
+      gap: 1.5rem;
+      transition: right 0.3s ease-in-out;
+      z-index: 90;
+    }
+    .nav-links.active {
+      right: 0;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 600;
+      font-size: 1.2rem;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid transparent;
+      transition: var(--transition);
+    }
+    .nav-links a:hover {
+      border-bottom-color: var(--blue-primary);
+      color: var(--blue-primary);
+    }
+    /* overlay */
+    .menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 80;
+      display: none;
+    }
+    .menu-overlay.active {
+      display: block;
+    }
+
+    @media (min-width: 768px) {
+      .hamburger {
+        display: none;
+      }
+      .nav-links {
+        position: static;
+        width: auto;
+        height: auto;
+        background: transparent;
+        box-shadow: none;
+        flex-direction: row;
+        padding: 0;
+        gap: 1.8rem;
+      }
+      .nav-links a {
+        font-size: 1rem;
+      }
+      .rating-badge {
+        margin-left: 0;
+      }
+    }
+
+    /* ----- HERO SECTION ----- */
+    .hero {
+      background: linear-gradient(145deg, #ffffff 0%, var(--blue-light) 100%);
+    }
+    .hero-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      line-height: 1.2;
+      color: var(--blue-dark);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-soft);
+    }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    @media (min-width: 768px) {
+      .hero h1 { font-size: 3.5rem; }
+    }
+
+    /* ----- ABOUT ----- */
+    .about-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--gray-border);
+    }
+
+    /* PRODUCTS GRID */
+    .grid-cards {
+      display: grid;
+      gap: 1.8rem;
+      grid-template-columns: 1fr;
+    }
+    .product-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 2rem 1.5rem;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--gray-border);
+      transition: var(--transition);
+      text-align: center;
+    }
+    .product-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-hover);
+    }
+    .product-icon {
+      font-size: 3rem;
+      margin-bottom: 0.8rem;
+    }
+    .product-card h3 {
+      color: var(--blue-dark);
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* GALLERY GRID with image placeholders */
+    .gallery-grid {
+      display: grid;
+      gap: 1.2rem;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .gallery-item {
+      background: #bdd3e8;
+      aspect-ratio: 4/3;
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      color: var(--blue-dark);
+      background-size: cover;
+      background-position: center;
+      transition: var(--transition);
+      box-shadow: var(--shadow-card);
+      border: 1px solid white;
+      overflow: hidden;
+      position: relative;
+    }
+    /* simulated images using solid color + icon + text */
+    .gallery-item span {
+      background: rgba(255,255,255,0.8);
+      backdrop-filter: blur(4px);
+      padding: 0.4rem 1rem;
+      border-radius: 60px;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .gallery-item:hover {
+      transform: scale(1.03);
+      box-shadow: var(--shadow-hover);
+    }
+    /* unique tints for variety (like photos) */
+    .gallery-item:nth-child(1) { background: #c9dff2; }
+    .gallery-item:nth-child(2) { background: #b5d0e6; }
+    .gallery-item:nth-child(3) { background: #a7c4df; }
+    .gallery-item:nth-child(4) { background: #9bbad9; }
+    .gallery-item:nth-child(5) { background: #8fb0d2; }
+    .gallery-item:nth-child(6) { background: #83a6cc; }
+    .gallery-item:nth-child(7) { background: #789cc5; }
+    .gallery-item:nth-child(8) { background: #6c92bf; }
+
+    @media (min-width: 640px) {
+      .grid-cards { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (min-width: 1024px) {
+      .grid-cards { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    /* REVIEW CARDS */
+    .review-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: 1fr;
+    }
+    .review-card {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 1.8rem;
+      box-shadow: var(--shadow-card);
+      border-left: 6px solid var(--blue-primary);
+    }
+    .review-card:hover {
+      box-shadow: var(--shadow-hover);
+    }
+    .review-card p {
+      font-size: 1.1rem;
+      font-style: italic;
+    }
+    .reviewer {
+      margin-top: 1rem;
+      font-weight: 600;
+      color: var(--blue-dark);
+    }
+    @media (min-width: 768px) {
+      .review-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* CONTACT */
+    .contact-details {
+      background: var(--white);
+      border-radius: var(--radius-card);
+      padding: 2rem;
+      box-shadow: var(--shadow-card);
+      border: 1px solid var(--gray-border);
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+    .address {
+      font-size: 1.1rem;
+    }
+    .hours {
+      background: var(--blue-light);
+      padding: 1rem 1.8rem;
+      border-radius: 60px;
+      display: inline-block;
+      font-weight: 500;
+    }
+    .btn-group a { pointer-events: none; }  /* demo: no actual links */
+    /* footer */
+    .footer {
+      background: var(--blue-dark);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-row">
+      <div class="shop-title">
+        <span class="shop-name">Anu Electricals</span>
+        <span class="shop-sub">Electrical & Electronics Store · Rasipuram</span>
+      </div>
+      <div class="rating-badge">
+        <span class="stars">★★★★½</span> 4.5
+      </div>
+      <!-- hamburger icon -->
+      <div class="hamburger" id="hamburgerBtn">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <!-- navigation menu (mobile slide) -->
+      <nav class="nav-links" id="navMenu">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#products">Products</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#reviews">Reviews</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <!-- overlay -->
+    <div class="menu-overlay" id="overlay"></div>
+  </header>
+
+  <main>
+    <!-- HERO (demo: buttons no action) -->
+    <section id="home" class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <h1>All Electrical Items<br>in One Place</h1>
+          <p>⭐ Genuine quality · affordable price · wholesale market rate · trusted since 2005</p>
+          <div class="btn-group">
+            <a href="#" class="btn btn-primary" onclick="return false;">📞 Call Now</a>
+            <a href="#" class="btn btn-primary" onclick="return false;">💬 WhatsApp</a>
+            <a href="#" class="btn btn-outline" onclick="return false;">📍 Directions</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <h2>About Us</h2>
+        <div class="about-card">
+          <p style="font-size: 1.2rem; margin-bottom: 1rem;">🔌 <strong>Anu Electricals</strong> – your local partner for all things electrical in Rasipuram. We offer <strong>wholesale pricing</strong> and top-notch service.</p>
+          <p style="color: var(--text-soft);">From a single switch to full house wiring, every product meets safety standards. We believe in long‑term relationships, not just transactions.</p>
+          <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
+            <span style="background: var(--blue-light); padding: 0.3rem 1rem; border-radius: 40px;">💯 genuine</span>
+            <span style="background: var(--blue-light); padding: 0.3rem 1rem; border-radius: 40px;">⚡ service guaranteed</span>
+            <span style="background: var(--blue-light); padding: 0.3rem 1rem; border-radius: 40px;">🏷️ wholesale price</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCTS -->
+    <section id="products">
+      <div class="container">
+        <h2>Our Products</h2>
+        <div class="grid-cards">
+          <div class="product-card">
+            <div class="product-icon">🔌</div>
+            <h3>Switches & Wires</h3>
+            <p>Anchor, Legrand, Polycab – modular switches, copper wires.</p>
+          </div>
+          <div class="product-card">
+            <div class="product-icon">💡</div>
+            <h3>LED Lights</h3>
+            <p>Batten, panel, spot, flood – energy saving & high lumen.</p>
+          </div>
+          <div class="product-card">
+            <div class="product-icon">🌀</div>
+            <h3>Fans & Appliances</h3>
+            <p>Ceiling fans, exhaust, table fans, small appliances.</p>
+          </div>
+          <div class="product-card">
+            <div class="product-icon">📦</div>
+            <h3>Wholesale Items</h3>
+            <p>MCB, distribution box, conduit pipes, cables – bulk orders.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY (with simulated images) -->
+    <section id="gallery">
+      <div class="container">
+        <h2>Shop Glimpses</h2>
+        <div class="gallery-grid">
+          <div class="gallery-item"><span>🪟 Front</span></div>
+          <div class="gallery-item"><span>💡 LED aisle</span></div>
+          <div class="gallery-item"><span>🔧 wires</span></div>
+          <div class="gallery-item"><span>🧾 counter</span></div>
+          <div class="gallery-item"><span>📦 wholesale</span></div>
+          <div class="gallery-item"><span>⭐ customers</span></div>
+          <div class="gallery-item"><span>🚪 entry</span></div>
+          <div class="gallery-item"><span>🛒 display</span></div>
+        </div>
+        <p style="text-align: center; margin-top: 1rem; color: var(--text-soft);">(hover zoom effect — demo images)</p>
+      </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews">
+      <div class="container">
+        <h2>Customer Reviews</h2>
+        <div class="review-grid">
+          <div class="review-card"><p>“Good service and quality material. I bought wires for my new house – genuine products.”</p><div class="reviewer">— Rajendran</div></div>
+          <div class="review-card"><p>“Very nice service. They guided me to choose the right LED lights. Reasonable rate.”</p><div class="reviewer">— Kavitha</div></div>
+          <div class="review-card"><p>“Wholesale price and good support. Best place for contractors like me.”</p><div class="reviewer">— Kumar</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT (demo buttons) -->
+    <section id="contact">
+      <div class="container">
+        <h2>Visit or Connect</h2>
+        <div class="contact-details">
+          <div class="address">
+            🏪 <strong>Anu Electricals</strong><br>
+            New Bus Stand Rd, Rasipuram, Tamil Nadu 637408
+          </div>
+          <div class="btn-group">
+            <a href="#" class="btn btn-primary" onclick="return false;">📞 Call</a>
+            <a href="#" class="btn btn-primary" onclick="return false;">💬 WhatsApp</a>
+            <a href="#" class="btn btn-outline" onclick="return false;">🗺️ Directions</a>
+          </div>
+          <div class="hours">
+            🕒 9 AM – 9 PM (Mon–Sat) | Sunday closed
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div style="max-width:1280px; margin:0 auto; padding:0 1.5rem;">
+      © 2025 Anu Electricals Rasipuram. Demo site
+    </div>
+  </footer>
+
+  <!-- JavaScript for hamburger + smooth scroll + demo inactive -->
+  <script>
+    (function() {
+      const hamburger = document.getElementById('hamburgerBtn');
+      const navMenu = document.getElementById('navMenu');
+      const overlay = document.getElementById('overlay');
+
+      function closeMenu() {
+        navMenu.classList.remove('active');
+        overlay.classList.remove('active');
+      }
+      function openMenu() {
+        navMenu.classList.add('active');
+        overlay.classList.add('active');
+      }
+
+      hamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (navMenu.classList.contains('active')) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      overlay.addEventListener('click', closeMenu);
+
+      // close on nav link click (for mobile)
+      document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', (e) => {
+          // still allow smooth scroll but close menu
+          closeMenu();
+          // actually let the hash work (smooth scroll)
+          const targetId = link.getAttribute('href'); // e.g. #home
+          if (targetId && targetId !== '#') {
+            const targetEl = document.querySelector(targetId);
+            if (targetEl) {
+              e.preventDefault(); // prevent instant jump, do smooth
+              targetEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+        });
+      });
+
+      // optional: close on resize if > 768px
+      window.addEventListener('resize', () => {
+        if (window.innerWidth >= 768) {
+          closeMenu();
+        }
+      });
+
+      // ensure any .btn click does nothing (demo)
+      document.querySelectorAll('.btn').forEach(btn => {
+        btn.addEventListener('click', (e) => e.preventDefault());
+      });
+    })();
+  </script>
+  <!-- ensure all buttons are demo (no action) also with href="#"/ prevent -->
+  <style>
+    /* just extra insurance */
+    .btn { pointer-events: auto; } /* but we used onclick return false & js preventDefault */
+  </style>
+</body>
+</html>
