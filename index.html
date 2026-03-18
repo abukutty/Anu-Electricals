@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Anu Electricals · Rasipuram</title>
   <style>
-    /* ----- RESET & VARIABLES (unchanged) ----- */
+    /* ----- RESET & VARIABLES (improved mobile responsiveness) ----- */
     * {
       margin: 0;
       padding: 0;
@@ -34,13 +34,22 @@
       color: var(--text-dark);
       line-height: 1.5;
       scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
     }
 
-    /* container same width all sections */
+    /* container - fully responsive */
     .container {
+      width: 100%;
       max-width: 1280px;
       margin: 0 auto;
-      padding: 2rem 1.5rem;
+      padding: 1.5rem 1rem;
+    }
+
+    @media (min-width: 480px) {
+      .container {
+        padding: 2rem 1.5rem;
+      }
     }
 
     @media (min-width: 768px) {
@@ -49,18 +58,20 @@
       }
     }
 
-    /* typography etc */
+    /* typography - fluid */
     h1, h2, h3 {
       font-weight: 600;
       letter-spacing: -0.02em;
+      word-wrap: break-word;
     }
 
     h2 {
-      font-size: 2rem;
-      margin-bottom: 2rem;
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+      margin-bottom: 1.5rem;
       color: var(--blue-dark);
       position: relative;
     }
+    
     h2:after {
       content: '';
       display: block;
@@ -68,10 +79,10 @@
       height: 4px;
       background: var(--blue-primary);
       border-radius: 100px;
-      margin-top: 0.5rem;
+      margin-top: 0.3rem;
     }
 
-    /* buttons unchanged */
+    /* buttons - touch friendly */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -80,7 +91,7 @@
       background: var(--white);
       border: 1px solid var(--gray-border);
       color: var(--text-dark);
-      padding: 0.75rem 1.6rem;
+      padding: 0.8rem 1.4rem;
       border-radius: 60px;
       font-weight: 500;
       font-size: 1rem;
@@ -88,139 +99,168 @@
       transition: var(--transition);
       box-shadow: 0 4px 8px rgba(0,0,0,0.02);
       cursor: pointer;
-      pointer-events: auto;
+      -webkit-tap-highlight-color: transparent;
+      min-height: 48px; /* better touch target */
     }
+    
     .btn-primary {
       background: var(--blue-primary);
       border-color: var(--blue-primary);
       color: white;
       box-shadow: 0 8px 18px -6px var(--blue-primary);
     }
+    
     .btn-primary:hover {
       background: var(--blue-dark);
       border-color: var(--blue-dark);
       transform: scale(1.02);
-      box-shadow: 0 12px 24px -8px var(--blue-dark);
     }
+    
     .btn-outline:hover {
       background: var(--blue-light);
       border-color: var(--blue-primary);
       color: var(--blue-dark);
-      transform: translateY(-2px);
     }
 
-    /* header sticky + hamburger (unchanged) */
+    /* header - mobile optimized */
     .site-header {
       position: sticky;
       top: 0;
       z-index: 50;
-      background: rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.98);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
       border-bottom: 1px solid rgba(0,0,0,0.05);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+      width: 100%;
     }
+    
     .header-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.8rem 1.5rem;
+      padding: 0.6rem 1rem;
       max-width: 1280px;
       margin: 0 auto;
-      flex-wrap: wrap;
+      gap: 0.5rem;
     }
+    
     .shop-title {
       display: flex;
       flex-direction: column;
+      flex: 1;
+      min-width: 0; /* prevent overflow */
     }
+    
     .shop-name {
-      font-size: 1.7rem;
+      font-size: clamp(1.2rem, 5vw, 1.7rem);
       font-weight: 700;
       color: var(--blue-dark);
       line-height: 1.2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+    
     .shop-sub {
-      font-size: 0.85rem;
+      font-size: clamp(0.7rem, 3vw, 0.85rem);
       color: var(--text-soft);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
+    
     .rating-badge {
       background: var(--blue-light);
-      padding: 0.4rem 1rem;
+      padding: 0.3rem 0.6rem;
       border-radius: 60px;
       font-weight: 600;
       color: var(--blue-dark);
       display: flex;
       align-items: center;
-      gap: 0.3rem;
+      gap: 0.2rem;
       border: 1px solid white;
       box-shadow: var(--shadow-card);
-      font-size: 0.9rem;
-      margin-left: auto;
-      margin-right: 0.5rem;
+      font-size: clamp(0.7rem, 3vw, 0.9rem);
+      white-space: nowrap;
+      margin-right: 0.25rem;
     }
+    
     .stars {
       color: #f5b342;
-      letter-spacing: 2px;
+      letter-spacing: 1px;
     }
 
-    /* hamburger menu unchanged */
+    /* hamburger - bigger touch area */
     .hamburger {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      width: 28px;
-      height: 22px;
+      justify-content: space-around;
+      width: 32px;
+      height: 32px;
       cursor: pointer;
       z-index: 100;
+      padding: 6px 0;
+      -webkit-tap-highlight-color: transparent;
     }
+    
     .hamburger span {
       width: 100%;
-      height: 3.5px;
+      height: 3px;
       background: var(--blue-dark);
       border-radius: 10px;
       transition: var(--transition);
     }
+    
+    /* mobile menu - full height but width adjusted for small screens */
     .nav-links {
       position: fixed;
       top: 0;
       right: -100%;
-      width: 250px;
+      width: 85%;
+      max-width: 300px;
       height: 100vh;
       background: white;
-      box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+      box-shadow: -5px 0 30px rgba(0,0,0,0.15);
       display: flex;
       flex-direction: column;
-      padding: 6rem 2rem 2rem;
-      gap: 1.5rem;
+      padding: 5rem 1.5rem 2rem;
+      gap: 1.2rem;
       transition: right 0.3s ease-in-out;
       z-index: 90;
     }
+    
     .nav-links.active {
       right: 0;
     }
+    
     .nav-links a {
       text-decoration: none;
       color: var(--text-dark);
       font-weight: 600;
-      font-size: 1.2rem;
-      padding: 0.5rem 0;
+      font-size: 1.3rem;
+      padding: 0.8rem 0;
       border-bottom: 2px solid transparent;
       transition: var(--transition);
+      display: block;
     }
+    
     .nav-links a:hover {
       border-bottom-color: var(--blue-primary);
       color: var(--blue-primary);
     }
+    
     .menu-overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.3);
+      background: rgba(0,0,0,0.5);
       z-index: 80;
       display: none;
     }
+    
     .menu-overlay.active {
       display: block;
     }
@@ -232,6 +272,7 @@
       .nav-links {
         position: static;
         width: auto;
+        max-width: none;
         height: auto;
         background: transparent;
         box-shadow: none;
@@ -241,82 +282,96 @@
       }
       .nav-links a {
         font-size: 1rem;
+        padding: 0.3rem 0;
       }
       .rating-badge {
         margin-left: 0;
       }
     }
 
-    /* all sections same (hero, about, products, gallery, reviews, contact) */
+    /* hero section - mobile first */
     .hero {
       background: linear-gradient(145deg, #ffffff 0%, var(--blue-light) 100%);
     }
+    
     .hero-grid {
       display: flex;
       flex-direction: column;
-      gap: 2rem;
+      gap: 1.5rem;
     }
+    
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: clamp(2rem, 8vw, 3.5rem);
       line-height: 1.2;
       color: var(--blue-dark);
     }
+    
     .hero p {
-      font-size: 1.2rem;
+      font-size: clamp(1rem, 4vw, 1.2rem);
       color: var(--text-soft);
     }
+    
     .btn-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 1rem;
+      gap: 0.8rem;
     }
-    @media (min-width: 768px) {
-      .hero h1 { font-size: 3.5rem; }
+    
+    .btn-group .btn {
+      flex: 1 1 auto;
+      min-width: 130px;
     }
 
+    /* about card - responsive */
     .about-card {
       background: var(--white);
       border-radius: var(--radius-card);
-      padding: 2rem;
+      padding: 1.5rem;
       box-shadow: var(--shadow-card);
       border: 1px solid var(--gray-border);
     }
 
+    /* products grid - mobile: 1 column, tablet: 2, desktop: 4 */
     .grid-cards {
       display: grid;
-      gap: 1.8rem;
+      gap: 1.2rem;
       grid-template-columns: 1fr;
     }
+    
     .product-card {
       background: var(--white);
       border-radius: var(--radius-card);
-      padding: 2rem 1.5rem;
+      padding: 1.5rem 1rem;
       box-shadow: var(--shadow-card);
       border: 1px solid var(--gray-border);
       transition: var(--transition);
       text-align: center;
     }
+    
     .product-card:hover {
       transform: translateY(-6px);
       box-shadow: var(--shadow-hover);
     }
+    
     .product-icon {
-      font-size: 3rem;
-      margin-bottom: 0.8rem;
+      font-size: 2.8rem;
+      margin-bottom: 0.5rem;
     }
+    
     .product-card h3 {
       color: var(--blue-dark);
-      font-size: 1.5rem;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
       margin-bottom: 0.5rem;
     }
 
+    /* gallery - mobile 2 columns, tablet 4 */
     .gallery-grid {
       display: grid;
-      gap: 1.2rem;
+      gap: 0.8rem;
       grid-template-columns: repeat(2, 1fr);
     }
+    
     .gallery-item {
-      background: #bdd3e8;
       aspect-ratio: 4/3;
       border-radius: var(--radius-sm);
       display: flex;
@@ -325,98 +380,113 @@
       font-weight: 500;
       color: var(--blue-dark);
       background-size: cover;
-      background-position: center;
       transition: var(--transition);
       box-shadow: var(--shadow-card);
       border: 1px solid white;
       overflow: hidden;
       position: relative;
+      min-height: 100px;
     }
+    
     .gallery-item span {
-      background: rgba(255,255,255,0.8);
+      background: rgba(255,255,255,0.85);
       backdrop-filter: blur(4px);
-      padding: 0.4rem 1rem;
+      padding: 0.3rem 0.8rem;
       border-radius: 60px;
-      font-size: 1rem;
+      font-size: clamp(0.7rem, 3vw, 1rem);
       font-weight: 600;
     }
-    .gallery-item:hover {
-      transform: scale(1.03);
-      box-shadow: var(--shadow-hover);
+
+    @media (min-width: 480px) {
+      .gallery-grid {
+        gap: 1rem;
+      }
     }
-    .gallery-item:nth-child(1) { background: #c9dff2; }
-    .gallery-item:nth-child(2) { background: #b5d0e6; }
-    .gallery-item:nth-child(3) { background: #a7c4df; }
-    .gallery-item:nth-child(4) { background: #9bbad9; }
-    .gallery-item:nth-child(5) { background: #8fb0d2; }
-    .gallery-item:nth-child(6) { background: #83a6cc; }
-    .gallery-item:nth-child(7) { background: #789cc5; }
-    .gallery-item:nth-child(8) { background: #6c92bf; }
 
     @media (min-width: 640px) {
-      .grid-cards { grid-template-columns: repeat(2, 1fr); }
-      .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+      .grid-cards { 
+        grid-template-columns: repeat(2, 1fr); 
+      }
+      .gallery-grid { 
+        grid-template-columns: repeat(4, 1fr); 
+      }
     }
+    
     @media (min-width: 1024px) {
-      .grid-cards { grid-template-columns: repeat(4, 1fr); }
+      .grid-cards { 
+        grid-template-columns: repeat(4, 1fr); 
+      }
     }
 
+    /* reviews - mobile 1, tablet 3 */
     .review-grid {
       display: grid;
-      gap: 1.5rem;
+      gap: 1.2rem;
       grid-template-columns: 1fr;
     }
+    
     .review-card {
       background: var(--white);
       border-radius: var(--radius-card);
-      padding: 1.8rem;
+      padding: 1.5rem;
       box-shadow: var(--shadow-card);
       border-left: 6px solid var(--blue-primary);
     }
-    .review-card:hover {
-      box-shadow: var(--shadow-hover);
-    }
+    
     .review-card p {
-      font-size: 1.1rem;
+      font-size: clamp(0.95rem, 4vw, 1.1rem);
       font-style: italic;
     }
+    
     .reviewer {
-      margin-top: 1rem;
+      margin-top: 0.8rem;
       font-weight: 600;
       color: var(--blue-dark);
     }
+
     @media (min-width: 768px) {
-      .review-grid { grid-template-columns: repeat(3, 1fr); }
+      .review-grid { 
+        grid-template-columns: repeat(3, 1fr); 
+      }
     }
 
+    /* contact - responsive */
     .contact-details {
       background: var(--white);
       border-radius: var(--radius-card);
-      padding: 2rem;
+      padding: 1.5rem;
       box-shadow: var(--shadow-card);
       border: 1px solid var(--gray-border);
       display: flex;
       flex-direction: column;
-      gap: 1.8rem;
+      gap: 1.5rem;
     }
+    
     .address {
-      font-size: 1.1rem;
+      font-size: clamp(1rem, 4vw, 1.1rem);
+      word-break: break-word;
     }
+    
     .hours {
       background: var(--blue-light);
-      padding: 1rem 1.8rem;
+      padding: 0.8rem 1.2rem;
       border-radius: 60px;
       display: inline-block;
       font-weight: 500;
+      font-size: clamp(0.9rem, 4vw, 1rem);
+      width: fit-content;
     }
+
+    /* footer */
     .footer {
       background: var(--blue-dark);
       color: white;
       text-align: center;
-      padding: 1.5rem;
+      padding: 1.2rem;
+      font-size: clamp(0.8rem, 4vw, 0.95rem);
     }
 
-    /* ------- NEW: SPLASH OVERLAY (ONLY CHANGE ADDED) ------- */
+    /* ------- SPLASH OVERLAY - FULLY MOBILE RESPONSIVE ------- */
     #splashOverlay {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -426,35 +496,81 @@
       justify-content: center;
       z-index: 9999;
       transition: opacity 0.5s ease;
-      pointer-events: none; /* so clicks pass through when fading, but we handle via JS display */
+      pointer-events: none;
+      padding: 1rem;
     }
+    
     .splash-content {
       background: white;
-      padding: 2.5rem 3rem;
+      padding: 2rem 1.5rem;
       border-radius: var(--radius-card);
       box-shadow: 0 30px 50px rgba(0,0,0,0.3);
       text-align: center;
-      max-width: 90%;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
     }
+    
     .splash-content h3 {
-      font-size: 2.2rem;
+      font-size: clamp(1.8rem, 8vw, 2.5rem);
       color: var(--blue-dark);
       margin-bottom: 0.5rem;
+      word-break: break-word;
     }
-    .splash-content p {
-      font-size: 1.4rem;
+
+    /* typing container - mobile optimized */
+    .typing-demo {
+      font-size: clamp(1.5rem, 7vw, 2rem);
+      font-weight: 600;
+      color: var(--blue-primary);
+      display: inline-block;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 4px solid var(--blue-primary);
+      width: 0;
+      max-width: 100%;
+      animation: typing 3s steps(12, end) forwards, blinkCaret 0.75s step-end infinite;
+    }
+
+    /* adjusted typing for mobile */
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+    
+    @keyframes blinkCaret {
+      from, to { border-color: transparent; }
+      50% { border-color: var(--blue-primary); }
+    }
+
+    .loading-note {
+      margin-top: 1rem;
+      font-size: clamp(0.9rem, 4vw, 1.1rem);
       color: var(--text-soft);
     }
-    /* no other changes to existing style */
+
+    /* touch-friendly adjustments */
+    .btn, .hamburger, .nav-links a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ensure text doesn't overflow */
+    p, h1, h2, h3, .address, .review-card p {
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
   </style>
 </head>
 <body>
-  <!-- SPLASH OVERLAY: appears 5 seconds, then disappears (only this block added) -->
+  <!-- SPLASH OVERLAY: fully responsive -->
   <div id="splashOverlay">
     <div class="splash-content">
       <h3>⚡ Anu Electricals</h3>
-      <p>Demo website</p>
-      <div style="margin-top:1rem; font-size:1rem; color:#0a4b7a;">loading main site...</div>
+      <!-- typing effect container - responsive text -->
+      <div style="display: flex; justify-content: center; width: 100%;">
+        <div class="typing-demo" id="typingText">Demo site</div>
+      </div>
+      <div class="loading-note" id="loadingMessage">please wait, loading main site...</div>
     </div>
   </div>
 
@@ -462,18 +578,18 @@
     <div class="header-row">
       <div class="shop-title">
         <span class="shop-name">Anu Electricals</span>
-        <span class="shop-sub">Electrical & Electronics Store · Rasipuram</span>
+        <span class="shop-sub">Electrical & Electronics · Rasipuram</span>
       </div>
       <div class="rating-badge">
         <span class="stars">★★★★½</span> 4.5
       </div>
-      <!-- hamburger icon -->
+      <!-- hamburger icon with bigger touch target -->
       <div class="hamburger" id="hamburgerBtn">
         <span></span>
         <span></span>
         <span></span>
       </div>
-      <!-- navigation menu (mobile slide) -->
+      <!-- navigation menu -->
       <nav class="nav-links" id="navMenu">
         <a href="#home">Home</a>
         <a href="#about">About</a>
@@ -488,7 +604,7 @@
   </header>
 
   <main>
-    <!-- HERO (demo: buttons no action) -->
+    <!-- HERO -->
     <section id="home" class="hero">
       <div class="container">
         <div class="hero-grid">
@@ -508,12 +624,12 @@
       <div class="container">
         <h2>About Us</h2>
         <div class="about-card">
-          <p style="font-size: 1.2rem; margin-bottom: 1rem;">🔌 <strong>Anu Electricals</strong> – your local partner for all things electrical in Rasipuram. We offer <strong>wholesale pricing</strong> and top-notch service.</p>
+          <p style="font-size: clamp(1rem, 4vw, 1.2rem); margin-bottom: 1rem;">🔌 <strong>Anu Electricals</strong> – your local partner for all things electrical in Rasipuram. We offer <strong>wholesale pricing</strong> and top-notch service.</p>
           <p style="color: var(--text-soft);">From a single switch to full house wiring, every product meets safety standards. We believe in long‑term relationships, not just transactions.</p>
-          <div style="display: flex; gap: 1rem; margin-top: 1.5rem; flex-wrap: wrap;">
-            <span style="background: var(--blue-light); padding: 0.3rem 1rem; border-radius: 40px;">💯 genuine</span>
-            <span style="background: var(--blue-light); padding: 0.3rem 1rem; border-radius: 40px;">⚡ service guaranteed</span>
-            <span style="background: var(--blue-light); padding: 0.3rem 1rem; border-radius: 40px;">🏷️ wholesale price</span>
+          <div style="display: flex; gap: 0.8rem; margin-top: 1.5rem; flex-wrap: wrap;">
+            <span style="background: var(--blue-light); padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.9rem;">💯 genuine</span>
+            <span style="background: var(--blue-light); padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.9rem;">⚡ service guaranteed</span>
+            <span style="background: var(--blue-light); padding: 0.3rem 1rem; border-radius: 40px; font-size: 0.9rem;">🏷️ wholesale price</span>
           </div>
         </div>
       </div>
@@ -548,7 +664,7 @@
       </div>
     </section>
 
-    <!-- GALLERY (with simulated images) -->
+    <!-- GALLERY -->
     <section id="gallery">
       <div class="container">
         <h2>Shop Glimpses</h2>
@@ -562,7 +678,7 @@
           <div class="gallery-item"><span>🚪 entry</span></div>
           <div class="gallery-item"><span>🛒 display</span></div>
         </div>
-        <p style="text-align: center; margin-top: 1rem; color: var(--text-soft);">(hover zoom effect — demo images)</p>
+        <p style="text-align: center; margin-top: 1rem; color: var(--text-soft); font-size: 0.9rem;">(hover zoom effect — demo images)</p>
       </div>
     </section>
 
@@ -578,7 +694,7 @@
       </div>
     </section>
 
-    <!-- CONTACT (demo buttons) -->
+    <!-- CONTACT -->
     <section id="contact">
       <div class="container">
         <h2>Visit or Connect</h2>
@@ -601,12 +717,12 @@
   </main>
 
   <footer class="footer">
-    <div style="max-width:1280px; margin:0 auto; padding:0 1.5rem;">
+    <div style="max-width:1280px; margin:0 auto; padding:0 1rem;">
       © 2025 Anu Electricals Rasipuram. Demo site
     </div>
   </footer>
 
-  <!-- JavaScript: hamburger + smooth scroll + demo inactive, and now splash timeout (only addition inside) -->
+  <!-- JavaScript: optimized for mobile -->
   <script>
     (function() {
       const hamburger = document.getElementById('hamburgerBtn');
@@ -616,10 +732,13 @@
       function closeMenu() {
         navMenu.classList.remove('active');
         overlay.classList.remove('active');
+        document.body.style.overflow = ''; // restore scrolling
       }
+      
       function openMenu() {
         navMenu.classList.add('active');
         overlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // prevent background scroll
       }
 
       hamburger.addEventListener('click', (e) => {
@@ -633,6 +752,7 @@
 
       overlay.addEventListener('click', closeMenu);
 
+      // close on nav link click (mobile)
       document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', (e) => {
           closeMenu();
@@ -647,37 +767,39 @@
         });
       });
 
+      // handle resize
       window.addEventListener('resize', () => {
         if (window.innerWidth >= 768) {
           closeMenu();
         }
       });
 
+      // prevent default on all demo buttons
       document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('click', (e) => e.preventDefault());
       });
 
-      // ---------- ONLY ADDITION: splash overlay 5s timeout ----------
+      // splash screen with 15s delay (mobile optimized)
       const splash = document.getElementById('splashOverlay');
       if (splash) {
-        // start fully visible
         splash.style.display = 'flex';
-        // after 5 seconds, fade out and remove from screen
+        splash.style.opacity = '1';
+
+        // 15 seconds timeout
         setTimeout(() => {
           splash.style.opacity = '0';
-          // after transition ends (0.5s), set display to none
           setTimeout(() => {
             splash.style.display = 'none';
-          }, 500); // matches transition 0.5s
-        }, 15000); // 5000ms = 5 seconds
+          }, 500);
+        }, 15000);
+
+        // optional message update
+        setTimeout(() => {
+          const msg = document.getElementById('loadingMessage');
+          if (msg) msg.innerText = 'almost ready...';
+        }, 10000);
       }
     })();
   </script>
-  <style>
-    .btn { pointer-events: auto; }
-    /* extra insurance for splash text not to interfere */
-    #splashOverlay { transition: opacity 0.5s ease; pointer-events: none; }
-    .splash-content { pointer-events: none; }
-  </style>
 </body>
 </html>
