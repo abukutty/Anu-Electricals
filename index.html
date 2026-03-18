@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Anu Electricals · Rasipuram</title>
   <style>
-    /* ----- RESET & VARIABLES ----- */
+    /* ----- RESET & VARIABLES (unchanged) ----- */
     * {
       margin: 0;
       padding: 0;
@@ -36,7 +36,7 @@
       scroll-behavior: smooth;
     }
 
-    /* ----- CONTAINER (same width all sections) ----- */
+    /* container same width all sections */
     .container {
       max-width: 1280px;
       margin: 0 auto;
@@ -49,7 +49,7 @@
       }
     }
 
-    /* ----- TYPOGRAPHY & UTILS ----- */
+    /* typography etc */
     h1, h2, h3 {
       font-weight: 600;
       letter-spacing: -0.02em;
@@ -71,7 +71,7 @@
       margin-top: 0.5rem;
     }
 
-    /* ----- BUTTONS (demo: no actions, only pointer) ----- */
+    /* buttons unchanged */
     .btn {
       display: inline-flex;
       align-items: center;
@@ -88,7 +88,7 @@
       transition: var(--transition);
       box-shadow: 0 4px 8px rgba(0,0,0,0.02);
       cursor: pointer;
-      pointer-events: auto;  /* just for demo, but we keep look */
+      pointer-events: auto;
     }
     .btn-primary {
       background: var(--blue-primary);
@@ -109,7 +109,7 @@
       transform: translateY(-2px);
     }
 
-    /* ----- HEADER (sticky + hamburger) ----- */
+    /* header sticky + hamburger (unchanged) */
     .site-header {
       position: sticky;
       top: 0;
@@ -163,7 +163,7 @@
       letter-spacing: 2px;
     }
 
-    /* HAMBURGER MENU */
+    /* hamburger menu unchanged */
     .hamburger {
       display: flex;
       flex-direction: column;
@@ -180,7 +180,6 @@
       border-radius: 10px;
       transition: var(--transition);
     }
-    /* nav links mobile */
     .nav-links {
       position: fixed;
       top: 0;
@@ -212,7 +211,6 @@
       border-bottom-color: var(--blue-primary);
       color: var(--blue-primary);
     }
-    /* overlay */
     .menu-overlay {
       position: fixed;
       top: 0;
@@ -249,7 +247,7 @@
       }
     }
 
-    /* ----- HERO SECTION ----- */
+    /* all sections same (hero, about, products, gallery, reviews, contact) */
     .hero {
       background: linear-gradient(145deg, #ffffff 0%, var(--blue-light) 100%);
     }
@@ -276,7 +274,6 @@
       .hero h1 { font-size: 3.5rem; }
     }
 
-    /* ----- ABOUT ----- */
     .about-card {
       background: var(--white);
       border-radius: var(--radius-card);
@@ -285,7 +282,6 @@
       border: 1px solid var(--gray-border);
     }
 
-    /* PRODUCTS GRID */
     .grid-cards {
       display: grid;
       gap: 1.8rem;
@@ -314,7 +310,6 @@
       margin-bottom: 0.5rem;
     }
 
-    /* GALLERY GRID with image placeholders */
     .gallery-grid {
       display: grid;
       gap: 1.2rem;
@@ -337,7 +332,6 @@
       overflow: hidden;
       position: relative;
     }
-    /* simulated images using solid color + icon + text */
     .gallery-item span {
       background: rgba(255,255,255,0.8);
       backdrop-filter: blur(4px);
@@ -350,7 +344,6 @@
       transform: scale(1.03);
       box-shadow: var(--shadow-hover);
     }
-    /* unique tints for variety (like photos) */
     .gallery-item:nth-child(1) { background: #c9dff2; }
     .gallery-item:nth-child(2) { background: #b5d0e6; }
     .gallery-item:nth-child(3) { background: #a7c4df; }
@@ -368,7 +361,6 @@
       .grid-cards { grid-template-columns: repeat(4, 1fr); }
     }
 
-    /* REVIEW CARDS */
     .review-grid {
       display: grid;
       gap: 1.5rem;
@@ -397,7 +389,6 @@
       .review-grid { grid-template-columns: repeat(3, 1fr); }
     }
 
-    /* CONTACT */
     .contact-details {
       background: var(--white);
       border-radius: var(--radius-card);
@@ -418,17 +409,55 @@
       display: inline-block;
       font-weight: 500;
     }
-    .btn-group a { pointer-events: none; }  /* demo: no actual links */
-    /* footer */
     .footer {
       background: var(--blue-dark);
       color: white;
       text-align: center;
       padding: 1.5rem;
     }
+
+    /* ------- NEW: SPLASH OVERLAY (ONLY CHANGE ADDED) ------- */
+    #splashOverlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background-color: var(--blue-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+      pointer-events: none; /* so clicks pass through when fading, but we handle via JS display */
+    }
+    .splash-content {
+      background: white;
+      padding: 2.5rem 3rem;
+      border-radius: var(--radius-card);
+      box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+      text-align: center;
+      max-width: 90%;
+    }
+    .splash-content h3 {
+      font-size: 2.2rem;
+      color: var(--blue-dark);
+      margin-bottom: 0.5rem;
+    }
+    .splash-content p {
+      font-size: 1.4rem;
+      color: var(--text-soft);
+    }
+    /* no other changes to existing style */
   </style>
 </head>
 <body>
+  <!-- SPLASH OVERLAY: appears 5 seconds, then disappears (only this block added) -->
+  <div id="splashOverlay">
+    <div class="splash-content">
+      <h3>⚡ Anu Electricals</h3>
+      <p>Demo website</p>
+      <div style="margin-top:1rem; font-size:1rem; color:#0a4b7a;">loading main site...</div>
+    </div>
+  </div>
+
   <header class="site-header">
     <div class="header-row">
       <div class="shop-title">
@@ -577,7 +606,7 @@
     </div>
   </footer>
 
-  <!-- JavaScript for hamburger + smooth scroll + demo inactive -->
+  <!-- JavaScript: hamburger + smooth scroll + demo inactive, and now splash timeout (only addition inside) -->
   <script>
     (function() {
       const hamburger = document.getElementById('hamburgerBtn');
@@ -604,40 +633,51 @@
 
       overlay.addEventListener('click', closeMenu);
 
-      // close on nav link click (for mobile)
       document.querySelectorAll('.nav-links a').forEach(link => {
         link.addEventListener('click', (e) => {
-          // still allow smooth scroll but close menu
           closeMenu();
-          // actually let the hash work (smooth scroll)
-          const targetId = link.getAttribute('href'); // e.g. #home
+          const targetId = link.getAttribute('href');
           if (targetId && targetId !== '#') {
             const targetEl = document.querySelector(targetId);
             if (targetEl) {
-              e.preventDefault(); // prevent instant jump, do smooth
+              e.preventDefault();
               targetEl.scrollIntoView({ behavior: 'smooth' });
             }
           }
         });
       });
 
-      // optional: close on resize if > 768px
       window.addEventListener('resize', () => {
         if (window.innerWidth >= 768) {
           closeMenu();
         }
       });
 
-      // ensure any .btn click does nothing (demo)
       document.querySelectorAll('.btn').forEach(btn => {
         btn.addEventListener('click', (e) => e.preventDefault());
       });
+
+      // ---------- ONLY ADDITION: splash overlay 5s timeout ----------
+      const splash = document.getElementById('splashOverlay');
+      if (splash) {
+        // start fully visible
+        splash.style.display = 'flex';
+        // after 5 seconds, fade out and remove from screen
+        setTimeout(() => {
+          splash.style.opacity = '0';
+          // after transition ends (0.5s), set display to none
+          setTimeout(() => {
+            splash.style.display = 'none';
+          }, 500); // matches transition 0.5s
+        }, 15000); // 5000ms = 5 seconds
+      }
     })();
   </script>
-  <!-- ensure all buttons are demo (no action) also with href="#"/ prevent -->
   <style>
-    /* just extra insurance */
-    .btn { pointer-events: auto; } /* but we used onclick return false & js preventDefault */
+    .btn { pointer-events: auto; }
+    /* extra insurance for splash text not to interfere */
+    #splashOverlay { transition: opacity 0.5s ease; pointer-events: none; }
+    .splash-content { pointer-events: none; }
   </style>
 </body>
 </html>
